@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+    "**/build/**": true,
+    "**/local_modules/**": true,
+    "**/node_modules/**": true
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true
+}
