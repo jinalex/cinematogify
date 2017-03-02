@@ -1,5 +1,5 @@
 {
-  "name": "cinematogragifs-web",
+  "name": "cinematogify-web",
   "version": "1.0.0",
   "description": "GIFs showcasing cinematography",
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "webpack"
   },
   "repository": {
-    "url": "git@github.com:jinalex/cinematogragifs.git",
+    "url": "git@github.com:jinalex/cinematogify.git",
     "type": "git"
   },
   "author": "Alex Jin <jin.alex@queensu.ca> (http://alexjin.me/)",

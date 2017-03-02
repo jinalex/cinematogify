@@ -45,7 +45,7 @@ export default class App extends React.Component {
       <StickyContainer>
         <Sticky>
           <h1>
-            CINEMATOGRAGIFS
+            cinematogify
           </h1>
         </Sticky>
         <Search onTermChange={this.handleTermChange} />
