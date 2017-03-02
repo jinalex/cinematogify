@@ -1,5 +1,5 @@
 {
-  "name": "cinematogragifs",
+  "name": "cinematogify",
   "version": "1.0.0",
   "dependencies": {
     "babel-eslint": "^7.1.1",
