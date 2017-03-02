@@ -3,7 +3,8 @@
     width: 90%;
 }
 
-.gif-item {
+.gif-card
+ {
     box-shadow: 2px 2px 4px 0 #ccc;
     box-sizing: border-box;
     display: inline-block;
@@ -12,7 +13,8 @@
     width: 100%;
 }
 
-.gif-item img {
+.gif-card
+ img {
     width: 100%;
 }
 
