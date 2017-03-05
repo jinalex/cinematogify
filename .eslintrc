@@ -1,0 +1,38 @@
+{
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [ "react" ],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": ["standard", "standard-react"],
+  "rules": {
+    "array-bracket-spacing": [ "warn", "always" ],
+    "default-case": "warn",
+    "eqeqeq": [ "error", "smart" ],
+    "no-console": [ "warn" ],
+    "no-else-return": "error",
+    "no-empty": 0,
+    "no-param-reassign": "error",
+    "no-use-before-define": [ "error", "nofunc" ],
+    "no-var": "error",
+    "object-curly-spacing": [ "warn", "always" ],
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "keyword-spacing": "warn",
+    "react/jsx-closing-bracket-location": [ "warn", "line-aligned" ],
+    "react/jsx-key": "error",
+    "react/jsx-uses-react": "error",
+    "react/jsx-no-undef": "error",
+    "react/jsx-uses-vars": "error",
+    "react/prop-types": "warn",
+    "react/react-in-jsx-scope": "error"
+  }
+}
