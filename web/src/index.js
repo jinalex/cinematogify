@@ -1,28 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import configureStore from './store/configureStore';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import configureStore from './store/configureStore'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 
-import App from './components/App';
-import Home from './containers/Home';
-import Signup from './containers/Signup';
-import Login from './containers/Login';
-import RequireAuth from './containers/RequireAuth';
-import Favourites from './containers/Favourites';
+import App from './components/App'
+import Home from './containers/Home'
+import Signup from './containers/Signup'
+import Login from './containers/Login'
+import RequireAuth from './containers/RequireAuth'
+import Favourites from './containers/Favourites'
 
-const store = configureStore();
+const store = configureStore()
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
+      <Route path='/' component={App}>
         <IndexRoute component={Home} />
-        <Route path="signup" component={Signup} />
-        <Route path="login" component={Login} />
-        <Route path="favourites" component={RequireAuth(Favourites)} />
+        <Route path='signup' component={Signup} />
+        <Route path='login' component={Login} />
+        <Route path='favourites' component={RequireAuth(Favourites)} />
       </Route>
     </Router>
   </Provider>,
   document.getElementById('app')
-);
+)
