@@ -12,6 +12,9 @@ const PATHS = {
 };
 
 module.exports = {
+  devServer: {
+    historyApiFallback: true,
+  },
   entry: './src/index.js',
   output: {
     path: PATHS.build,

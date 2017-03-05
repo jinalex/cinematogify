@@ -7,9 +7,8 @@ import SearchBar from '../components/Search';
 import CinemaGifList from '../components/CinemaGifList';
 import GifModal from '../components/GifModal';
 import '../styles/app.css';
-import { StickyContainer, Sticky } from 'react-sticky';
 
-class App extends React.Component {
+class Home extends React.Component {
   static propTypes = {
     gifs: React.PropTypes.array,
     actions: React.PropTypes.object,
@@ -18,19 +17,14 @@ class App extends React.Component {
   }
   render() {
     return (
-      <StickyContainer>
-        <Sticky>
-          <h1>Cinematogify</h1>
-        </Sticky>
-        <div>
-          <SearchBar onTermChange={this.props.actions.requestGifs} />
-          <CinemaGifList gifs={ this.props.gifs } onGifSelect={ selectedGif => this.props.actions.openModal({ selectedGif }) } />
-          <GifModal modalIsOpen={ this.props.modalIsOpen }
-                    selectedGif={ this.props.selectedGif }
-                    onRequestClose={ () => this.props.actions.closeModal() }
-          />
-        </div>
-      </StickyContainer>
+      <div>
+        <SearchBar onTermChange={this.props.actions.requestGifs} />
+        <CinemaGifList gifs={ this.props.gifs } onGifSelect={ selectedGif => this.props.actions.openModal({ selectedGif }) } />
+        <GifModal modalIsOpen={ this.props.modalIsOpen }
+                  selectedGif={ this.props.selectedGif }
+                  onRequestClose={ () => this.props.actions.closeModal() }
+        />
+      </div>
     );
   }
 }
@@ -49,4 +43,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
