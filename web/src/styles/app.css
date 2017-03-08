@@ -3,6 +3,29 @@
     width: 90%;
 }
 
+.fa-heart {
+    color: #a94442;
+    font-size: 12px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.fa-heart:hover {
+    color: #ccc;
+}
+
+.fa-heart-o {
+    font-size: 12px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.fa-heart-o:hover {
+    color: #a94442;
+}
+
 .gif-card
  {
     box-shadow: 2px 2px 4px 0 #ccc;
@@ -10,6 +33,7 @@
     display: inline-block;
     margin: 0 0 1.5em;
     padding: 1em;
+    position: relative;
     width: 100%;
 }
 

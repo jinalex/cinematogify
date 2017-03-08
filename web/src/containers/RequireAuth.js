@@ -8,9 +8,18 @@ export default function (WrappedComponent) {
       authenticated: React.PropTypes.bool
     }
     componentWillMount () {
-      console.log(this.props.authenticated)
       if (!this.props.authenticated) {
-        browserHistory.push('/login')
+        let hasLocalStorageUser = false
+
+        for (const key in window.localStorage) { // huh?
+          if (key.startsWith('firebase:authUser:')) {
+            hasLocalStorageUser = true
+          }
+        }
+
+        if (!hasLocalStorageUser) {
+          browserHistory.push('/login')
+        }
       }
     }
 

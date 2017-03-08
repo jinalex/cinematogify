@@ -1,16 +1,16 @@
 import { createStore, compose, applyMiddleware } from 'redux'
-import promiseMiddleware from 'redux-promise-middleware'  // ensures promises are resolved when they hit reducers
-// import ReduxPromise from 'redux-promise'
+import reduxThunk from 'redux-thunk'
 import rootReducer from '../reducers'
+import * as Actions from '../actions'
 
 export default function configureStore (initialState) {
   const store = createStore(
     rootReducer,
     initialState,
+    // compose is needed when there are multiple function transformations
     compose(
-      // compose is needed when there are multiple function transformations
-      applyMiddleware(promiseMiddleware()),
-      // applyMiddleware(ReduxPromise),
+      // applyMiddleware(promiseMiddleware()),
+      applyMiddleware(reduxThunk),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   )
@@ -22,6 +22,8 @@ export default function configureStore (initialState) {
       store.replaceReducer(nextRootReducer)
     })
   }
+
+  store.dispatch(Actions.verifyAuth())
 
   return store
 }
