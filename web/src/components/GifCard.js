@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactSpinner from 'react-spinjs'
 
 class GifCard extends React.Component {
   static propTypes = {
@@ -17,11 +18,11 @@ class GifCard extends React.Component {
     }
   }
 
-  handleImageLoaded () {
+  handleImageLoaded = () => {
     this.setState({ imageStatus: 'loaded' })
   }
 
-  handleImageError () {
+  handleImageError = () => {
     this.setState({ imageStatus: 'failed to load' })
   }
 
@@ -47,13 +48,24 @@ class GifCard extends React.Component {
     return <i className='favourite fa fa-heart-o' onClick={() => this.favouriteGif()} />
   }
 
+  renderSpinner = () => {
+    if (this.state.imageStatus === 'loading') {
+      return (
+        <div className='gif-card'>
+          <ReactSpinner color='black' />
+        </div>
+      )
+    }
+  }
+
   render () {
     return (
       <div className='gif-card'>
         { this.renderFavouriteHeart() }
+        { this.renderSpinner() }
         <img src={this.props.gif.images.downsized.url}
-          onLoad={this.handleImageLoaded.bind(this)}
-          onError={this.handleImageError.bind(this)}
+          onLoad={this.handleImageLoaded}
+          onError={this.handleImageError}
           onClick={() => this.props.onGifSelect(this.props.gif)}
         />
       </div>

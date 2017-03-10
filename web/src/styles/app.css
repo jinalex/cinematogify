@@ -58,6 +58,10 @@ input {
     width: 50%;
 }
 
+.sticky {
+    z-index: 99;
+}
+
 @media only screen and (min-width: 400px) {
     .gif-list {
         -moz-column-count: 2;

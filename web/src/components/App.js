@@ -10,7 +10,7 @@ export default class App extends React.Component {
     return (
       <StickyContainer>
         <Sticky>
-          <Header />
+          <Header className='sticky' />
         </Sticky>
         <div>
           {this.props.children}
