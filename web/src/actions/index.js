@@ -5,6 +5,7 @@ import Firebase from 'firebase'
 export const OPEN_MODAL = 'OPEN_MODAL'
 export const CLOSE_MODAL = 'CLOSE_MODAL'
 export const REQUEST_GIFS = 'REQUEST_GIFS'
+export const FETCH_FAVOURITED_GIFS = 'FETCH_FAVOURITED_GIFS'
 export const SIGN_OUT_USER = 'SIGN_OUT_USER'
 export const AUTH_ERROR = 'AUTH_ERROR'
 export const AUTH_USER = 'AUTH_USER'
@@ -28,6 +29,36 @@ export function requestGifs (term = null) {
       dispatch({
         type: REQUEST_GIFS,
         payload: response
+      })
+    })
+  }
+}
+
+export function favouriteGif ({ selectedGif }) {
+  const userUid = Firebase.auth().currentUser.uid
+  const gifId = selectedGif.id
+
+  return dispatch => Firebase.database().ref(userUid).update({
+    [gifId]: selectedGif
+  })
+}
+
+export function unfavouriteGif ({ selectedGif }) {
+  const userUid = Firebase.auth().currentUser.uid
+  const gifId = selectedGif.id
+
+  return dispatch => Firebase.database().ref(userUid).child(gifId).remove()
+}
+
+export function fetchFavouritedGifs () {
+  return (dispatch) => {
+    console.log(Firebase.auth())
+    const userUid = Firebase.auth().currentUser.uid
+
+    Firebase.database().ref(userUid).on('value', snapshot => {
+      dispatch({
+        type: FETCH_FAVOURITED_GIFS,
+        payload: snapshot.val()
       })
     })
   }

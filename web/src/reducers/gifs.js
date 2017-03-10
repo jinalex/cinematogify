@@ -1,7 +1,8 @@
-import { REQUEST_GIFS } from '../actions'
+import { REQUEST_GIFS, FETCH_FAVOURITED_GIFS } from '../actions'
 
 const initialState = {
-  data: []
+  data: [],
+  favourites: []
 }
 
 // note that the state here refers to just the state this reducer is responsible for
@@ -10,6 +11,16 @@ export default function gifs (state = initialState, action) {
     case REQUEST_GIFS:
       return {
         ...state, data: action.payload.body.data // this passes the old state with an updated property
+      }
+    case FETCH_FAVOURITED_GIFS:
+      const arr = []
+      for (const i in action.payload) {
+        if (action.payload.hasOwnProperty(i)) {
+          arr.push(action.payload[i])
+        }
+      }
+      return {
+        ...state, favorites: arr
       }
     default:
       return state

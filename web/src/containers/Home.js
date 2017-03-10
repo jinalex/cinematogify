@@ -13,12 +13,22 @@ class Home extends React.Component {
     gifs: React.PropTypes.array,
     actions: React.PropTypes.object,
     modalIsOpen: React.PropTypes.bool,
-    selectedGif: React.PropTypes.object
+    selectedGif: React.PropTypes.object,
+    authenticated: React.PropTypes.bool
   }
   render () {
     return (
       <div>
         <SearchBar onTermChange={this.props.actions.requestGifs} />
+
+        <CinemaGifList
+          gifs={this.props.gifs}
+          onGifSelect={selectedGif => this.props.actions.openModal({ selectedGif })}
+          onFavouriteSelect={selectedGif => this.props.actions.favouriteGif({ selectedGif })}
+          onFavouriteDeselect={selectedGif => this.props.actions.unfavouriteGif({ selectedGif })}
+          isAuthenticated={this.props.authenticated}
+        />
+
         <CinemaGifList gifs={this.props.gifs} onGifSelect={selectedGif => this.props.actions.openModal({ selectedGif })} />
         <GifModal modalIsOpen={this.props.modalIsOpen}
           selectedGif={this.props.selectedGif}
@@ -31,6 +41,7 @@ class Home extends React.Component {
 
 function mapStateToProps (state) {
   return {
+    authenticated: state.auth.authenticated,
     gifs: state.gifs.data,
     modalIsOpen: state.modal.modalIsOpen,
     selectedGif: state.modal.selectedGif
