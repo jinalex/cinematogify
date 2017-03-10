@@ -59,7 +59,7 @@ input {
 }
 
 .sticky {
-    z-index: 99;
+    z-index: 9999;
 }
 
 @media only screen and (min-width: 400px) {

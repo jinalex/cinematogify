@@ -51,7 +51,7 @@ class GifCard extends React.Component {
   renderSpinner = () => {
     if (this.state.imageStatus === 'loading') {
       return (
-        <ReactSpinner color='black' />
+        <ReactSpinner color='black' config={{ zIndex: 99 }} />
       )
     }
   }
