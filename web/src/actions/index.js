@@ -51,10 +51,13 @@ export function unfavouriteGif ({ selectedGif }) {
 }
 
 export function fetchFavouritedGifs () {
+  let userUid = null
+  for (const key in window.localStorage) {
+    if (key.includes('firebase:authUser:')) {
+      userUid = JSON.parse(window.localStorage.getItem(key)).uid
+    }
+  }
   return (dispatch) => {
-    console.log(Firebase.auth())
-    const userUid = Firebase.auth().currentUser.uid
-
     Firebase.database().ref(userUid).on('value', snapshot => {
       dispatch({
         type: FETCH_FAVOURITED_GIFS,

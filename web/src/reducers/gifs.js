@@ -20,7 +20,7 @@ export default function gifs (state = initialState, action) {
         }
       }
       return {
-        ...state, favorites: arr
+        ...state, favourites: arr
       }
     default:
       return state

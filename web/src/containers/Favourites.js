@@ -15,7 +15,7 @@ class Favourites extends React.Component {
     selectedGif: React.PropTypes.object
   }
 
-  componentWillMount () {
+  componentDidMount () {
     this.props.actions.fetchFavouritedGifs()
   }
 
