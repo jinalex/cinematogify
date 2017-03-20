@@ -51,7 +51,7 @@ class GifCard extends React.Component {
   renderSpinner = () => {
     if (this.state.imageStatus === 'loading') {
       return (
-        <ReactSpinner color='black' config={{ zIndex: 99 }} /> // should define configs somewhere else
+        <ReactSpinner color='black' config={{ zIndex: 5 }} /> // should define configs somewhere else
       )
     }
   }
@@ -66,6 +66,9 @@ class GifCard extends React.Component {
           onError={this.handleImageError}
           onClick={() => this.props.onGifSelect(this.props.gif)}
         />
+        <div>
+          hi
+        </div>
       </div>
     )
   }
