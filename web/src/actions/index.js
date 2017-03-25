@@ -1,14 +1,7 @@
 import request from 'superagent'
 import { browserHistory } from 'react-router'
 import Firebase from 'firebase'
-
-export const OPEN_MODAL = 'OPEN_MODAL'
-export const CLOSE_MODAL = 'CLOSE_MODAL'
-export const REQUEST_GIFS = 'REQUEST_GIFS'
-export const FETCH_FAVOURITED_GIFS = 'FETCH_FAVOURITED_GIFS'
-export const SIGN_OUT_USER = 'SIGN_OUT_USER'
-export const AUTH_ERROR = 'AUTH_ERROR'
-export const AUTH_USER = 'AUTH_USER'
+import mainStore from 'stores/MainStore'
 
 const API_URL = 'http://api.giphy.com/v1/gifs/search?q='
 const API_KEY = '&api_key=dc6zaTOxFJmzC'
@@ -24,21 +17,16 @@ const config = {
 Firebase.initializeApp(config)
 
 export function requestGifs (term = null) {
-  return (dispatch) => {
-    request.get(`${API_URL}${term.replace(/\s/g, '+')}${API_KEY}`).then(response => {
-      dispatch({
-        type: REQUEST_GIFS,
-        payload: response
-      })
-    })
-  }
+  request.get(`${API_URL}${term.replace(/\s/g, '+')}${API_KEY}`).then(response => {
+    mainStore.data = response
+  })
 }
 
 export function favouriteGif ({ selectedGif }) {
   const userUid = Firebase.auth().currentUser.uid
   const gifId = selectedGif.id
 
-  return dispatch => Firebase.database().ref(userUid).update({
+  return Firebase.database().ref(userUid).update({
     [gifId]: selectedGif
   })
 }
@@ -47,7 +35,7 @@ export function unfavouriteGif ({ selectedGif }) {
   const userUid = Firebase.auth().currentUser.uid
   const gifId = selectedGif.id
 
-  return dispatch => Firebase.database().ref(userUid).child(gifId).remove()
+  return Firebase.database().ref(userUid).child(gifId).remove()
 }
 
 export function fetchFavouritedGifs () {
@@ -57,51 +45,53 @@ export function fetchFavouritedGifs () {
       userUid = JSON.parse(window.localStorage.getItem(key)).uid
     }
   }
-  return (dispatch) => {
+  return () => {
     Firebase.database().ref(userUid).on('value', snapshot => {
-      dispatch({
-        type: FETCH_FAVOURITED_GIFS,
-        payload: snapshot.val()
-      })
+      const arr = []
+      const snapshotVal = snapshot.val()
+      for (const i in snapshotVal) {
+        if (snapshotVal.hasOwnProperty(i)) {
+          arr.push(snapshotVal[i])
+        }
+      }
+      mainStore.favourites = arr
     })
   }
 }
 
 export function openModal (gif) {
-  return {
-    type: OPEN_MODAL,
-    gif
-  }
+  mainStore.modalIsOpen = true
+  mainStore.selectedGif = gif.selectedGif
+  return gif
 }
 
 export function closeModal () {
-  return {
-    type: CLOSE_MODAL
-  }
+  mainStore.modalIsOpen = false
+  mainStore.selectedGif = null
 }
 
 export function signUpUser (credentials) {
-  return (dispatch) => {
+  return () => {
     Firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
       .then(response => {
-        dispatch(authUser())
+        authUser()
         browserHistory.push('/favourites')
       })
       .catch(error => {
-        dispatch(authError(error))
+        authError(error)
       })
   }
 }
 
 export function signInUser (credentials) {
-  return (dispatch) => {
+  return () => {
     Firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(response => {
-        dispatch(authUser())
+        authUser()
         browserHistory.push('/favourites')
       })
       .catch(error => {
-        dispatch(authError(error))
+        authError(error)
       })
   }
 }
@@ -109,32 +99,27 @@ export function signInUser (credentials) {
 export function signOutUser () {
   Firebase.auth().signOut()
   browserHistory.push('/')
-  return {
-    type: SIGN_OUT_USER
-  }
+  mainStore.authenticated = false
+  mainStore.error = null
 }
 
 export function verifyAuth () {
-  return function (dispatch) {
+  return () => {
     Firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        dispatch(authUser())
+        authUser()
       } else {
-        dispatch(signOutUser())
+        signOutUser()
       }
     })
   }
 }
 
 export function authUser () {
-  return {
-    type: AUTH_USER
-  }
+  mainStore.authenticated = true
+  mainStore.error = null
 }
 
 export function authError (error) {
-  return {
-    type: AUTH_ERROR,
-    payload: error
-  }
+  mainStore.error = error.message
 }

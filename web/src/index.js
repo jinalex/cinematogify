@@ -1,7 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import configureStore from './store/configureStore'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 
 import App from './components/App'
@@ -11,10 +9,16 @@ import Login from './containers/Login'
 import RequireAuth from './containers/RequireAuth'
 import Favourites from './containers/Favourites'
 
-const store = configureStore()
+import * as Actions from '../actions'
+
+import { Provider } from 'mobx-react'
+import { MainStore } from 'stores/MainStore'
+
+const mainStore = new MainStore()
+Actions.verifyAuth()
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={mainStore}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
         <IndexRoute component={Home} />
